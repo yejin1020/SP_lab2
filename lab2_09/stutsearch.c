@@ -9,7 +9,7 @@ struct node {
 	int final;
 };
 
-struct node *root = NULL; /* 루트 노드 */
+struct node *root = NULL; /* root node */
 
 int compare(const void *cp1, const void *cp2)
 {
@@ -17,7 +17,7 @@ int compare(const void *cp1, const void *cp2)
 	return strcmp(((struct node*)cp1)->name, ((struct node*)cp2)->name);
 }
 
-/* twalk 가 노드를 처음 만날때 출력 */
+/* twalk - print */
 void print_node(const void *nodeptr, VISIT order, int level)
 {
         if (order == preorder || order == leaf)
@@ -39,11 +39,11 @@ int main()
 	printf("Enter student number : ");
 	scanf("%d",&stunum);
 
-	/* 사용자가 입력한 수만큼 메모리 할당 */
+	/* allocate node */
 	nodeptr = (struct node *)malloc( stunum * sizeof(struct node));
         tmp = nodeptr;
 
-	/* 메모리 할당에 실패할 경우 */	
+	/* fail to allocate */	
 	if (nodeptr == NULL){
 		printf("fail to allocation.");
 		exit(-1);
@@ -53,14 +53,13 @@ int main()
 	for ( int j = 0 ; j < stunum ; j++)
 	{
 
-		//scanf("%s%d%d", nodeptr->name, &nodeptr->mid, &nodeptr-> final);
 		printf("[no.%d] student name :", j+1);
 		scanf("%s", nodeptr->name);
 		printf("[no.%d] student midscore, finalscore :",j+1);
 		scanf("%d%d",&nodeptr->mid,&nodeptr->final);
 		fflush(stdin);
 
-		/* 트리에 넣기 */
+		/* insert in tree */
 		ret = (struct node **)tsearch((const void *)nodeptr, (void **) &root, compare);
 
 		printf("Student \"%s\"  ", (*ret)->name);

@@ -1,9 +1,10 @@
-staticout : 
-	cd libmakefile;make;
-	cd ..;
-	gcc -I./libmakefile -L./libmakefile -o staticout main.c -lstatic
+shareout : main.o 
+	cd libmakefile; make lib; cd ..
+	gcc -I./libmakefile -L./libmakefile -o sharedout main.c -Wl,--rpath=./libmakefile -lshared
 
-clean :
-	cd libmakefile;make clean;
-	cd ..;rm -f staticout	
-	
+main.o : main.c
+	gcc -c main.c
+clean : 
+	rm -f libmakefile/libshared.so.1.0.1 libmakefile/libsharedso.1 libmakefile/libshared.so sharedout 
+	cd libmakefile; make clean
+
